@@ -25,4 +25,4 @@ dist-ssr
 
 # Ignore all env files
 .env
-.env.*
+.env.example
