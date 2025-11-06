@@ -36,8 +36,12 @@ const Header = ({ toggleSidebar, onLogout, toggleTheme, isDarkTheme }: HeaderPro
           </Button>
         )}
         <div className="flex items-center gap-2">
-          <BrainCircuit className="h-6 w-6 text-primary" />
-          <h1 className="text-lg font-semibold">InsightNotes</h1>
+          <img
+            src="/logo.png"
+            alt="GiffyDuck Logo"
+            className="h-12 w-12 object-contain"
+          />
+          <h1 className="text-lg font-semibold">GiffyDuck</h1>
         </div>
       </div>
       

@@ -119,7 +119,7 @@ const NoteDetailPage = () => {
     );
   }
   
-  const formattedDate = new Date(note.updatedAt).toLocaleDateString("en-US", {
+  const formattedDate = note.updatedAt.toLocaleDateString("en-US", {
     year: "numeric",
     month: "long",
     day: "numeric",
@@ -153,11 +153,7 @@ const NoteDetailPage = () => {
               <DialogHeader>
                 <DialogTitle>Edit Note</DialogTitle>
               </DialogHeader>
-              <NoteEditor 
-                note={note} 
-                onComplete={handleEditComplete} 
-                isEditing={true} 
-              />
+              
             </DialogContent>
           </Dialog>
           

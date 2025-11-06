@@ -27,11 +27,11 @@ const VerifyEmail = () => {
   useEffect(() => {
     const verifyEmail = async () => {
       try {
-        const { data, error } = await supabase.auth.getSession(); // Refreshes session with token from URL
+        const { data, error } = await supabase.auth.getSession();
         if (error) throw error;
         if (data.session) {
           setMessage("Email verified successfully! Redirecting...");
-          setTimeout(() => (window.location.href = "/dashboard"), 2000); // Redirect after 2s
+          setTimeout(() => (window.location.href = "/dashboard"), 2000);
         } else {
           setMessage("No session found. Please try again.");
         }

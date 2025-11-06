@@ -3,48 +3,46 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { getCurrentUser } from "@/services/authService";
+import { getUserProfile, updateUserProfile } from "@/services/userService";
 import { useToast } from "@/hooks/use-toast";
 
 const UserProfile = () => {
-  const [user, setUser] = useState<{ id: string; email: string; name: string } | null>(null);
   const [isLoading, setIsLoading] = useState(true);
-  const { toast } = useToast();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  
+  const [phone, setPhone] = useState("");
+  const { toast } = useToast();
+
   useEffect(() => {
-    const loadUser = async () => {
+    const loadData = async () => {
       try {
-        const currentUser = await getCurrentUser();
-        setUser(currentUser);
-        if (currentUser) {
-          setName(currentUser.name);
-          setEmail(currentUser.email);
+        const authUser = await getCurrentUser();
+        const profile = await getUserProfile();
+        if (authUser) setEmail(authUser.email);
+        if (profile) {
+          setName(profile.name || "");
+          setPhone(profile.phone || "");
         }
-      } catch (error) {
-        console.error('Error loading user:', error);
+      } catch (err) {
+        console.error("Error loading profile:", err);
       } finally {
         setIsLoading(false);
       }
     };
-    
-    loadUser();
+    loadData();
   }, []);
-  
-  const handleSubmit = async (e: React.FormEvent) => {
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    
-    if (!user) return;
-    
     try {
-      // TODO: Implement profile update with Supabase
+      await updateUserProfile(name, phone);
       toast({
-        title: "Profile updated",
-        description: "Your profile information has been updated successfully",
+        title: "Success",
+        description: "Profile updated successfully",
       });
-    } catch (error) {
+    } catch (err) {
+      console.error(err);
       toast({
         title: "Error",
         description: "Failed to update profile",
@@ -53,67 +51,62 @@ const UserProfile = () => {
     }
   };
 
+  const getInitial = () => {
+    return name.trim().charAt(0).toUpperCase() || "U";
+  };
+
   if (isLoading) {
     return (
-      <div className="flex items-center justify-center">
+      <div className="flex items-center justify-center h-40">
         <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
       </div>
     );
   }
 
-  if (!user) {
-    return <div>Please log in to view your profile.</div>;
-  }
-
-  const initials = user.name
-    .split(" ")
-    .map((n) => n[0])
-    .join("")
-    .toUpperCase();
-
   return (
-    <Card className="max-w-md mx-auto">
-      <CardHeader>
-        <CardTitle>Profile</CardTitle>
-        <CardDescription>Manage your account settings</CardDescription>
+    <Card className="w-full max-w-sm mx-auto">
+      <CardHeader className="text-center pb-4">
+        <div className="flex justify-center mb-3">
+          <div className="w-16 h-16 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-white text-xl font-bold">
+            {getInitial()}
+          </div>
+        </div>
+        <CardTitle className="text-xl">User Profile</CardTitle>
+        <CardDescription className="text-sm">Manage your account details</CardDescription>
       </CardHeader>
-      <form onSubmit={handleSubmit}>
-        <CardContent className="space-y-6">
-          <div className="flex items-center space-x-4">
-            <Avatar className="h-16 w-16">
-              <AvatarImage src={`https://avatar.vercel.sh/${user.email}`} />
-              <AvatarFallback>{initials}</AvatarFallback>
-            </Avatar>
-            <div>
-              <h3 className="font-medium">{user.name}</h3>
-              <p className="text-sm text-muted-foreground">{user.email}</p>
-            </div>
-          </div>
-          
-          <div className="space-y-2">
-            <Label htmlFor="name">Name</Label>
-            <Input
-              id="name"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-            />
-          </div>
-          
-          <div className="space-y-2">
-            <Label htmlFor="email">Email</Label>
-            <Input
-              id="email"
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              disabled
-            />
-          </div>
-        </CardContent>
-        <CardFooter>
-          <Button type="submit">Save Changes</Button>
-        </CardFooter>
-      </form>
+      <CardContent className="space-y-3 px-6">
+        <div className="space-y-2">
+          <Label htmlFor="name">Name</Label>
+          <Input 
+            id="name" 
+            value={name} 
+            onChange={(e) => setName(e.target.value)} 
+          />
+        </div>
+        <div className="space-y-2">
+          <Label htmlFor="email">Email</Label>
+          <Input 
+            id="email" 
+            type="email" 
+            value={email} 
+            disabled 
+          />
+        </div>
+        <div className="space-y-2">
+          <Label htmlFor="phone">Phone (optional)</Label>
+          <Input 
+            id="phone" 
+            type="tel" 
+            value={phone} 
+            onChange={(e) => setPhone(e.target.value)} 
+          />
+        </div>
+      </CardContent>
+      <CardFooter className="px-6 pb-6">
+        <Button onClick={handleSubmit} className="w-full">
+          Save Changes
+        </Button>
+      </CardFooter>
     </Card>
   );
 };

@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Plus, MessageCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import NoteList from "@/components/NoteList";
 import AIChatBox from "@/components/AIChatBox";
