@@ -1,4 +1,4 @@
-# Insight Notes
+# GiffyDuck - Notes
 
 A powerful note-taking application with AI integration and creative writing capabilities.
 
