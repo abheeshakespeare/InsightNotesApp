@@ -67,7 +67,7 @@ export const login = async (email: string, password: string): Promise<User> => {
  * Register a new user and trigger confirmation email.
  */
 export const register = async (email: string, password: string, name: string): Promise<void> => {
-  const redirectURL = "https://www.giffyduck.com"; // 👈 your live domain
+  const redirectURL = "https://www.giffyduck.com/"; // 👈 your live domain
 
   const { data, error } = await supabase.auth.signUp({
     email,
