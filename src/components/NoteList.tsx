@@ -55,7 +55,16 @@ const NoteList = ({ notes = [], onUpdate, isCreative = false, title = "Your Note
     <div className="space-y-6">
       <div className="flex flex-col gap-4">
         <div className="flex justify-between items-center">
-          <h2 className="text-2xl font-bold tracking-tight bg-gradient-to-r from-indigo-700 to-blue-700 bg-clip-text text-transparent">{title}</h2>
+          <h2 className=" 
+            text-lg
+            sm:text-xl
+            md:text-2xl
+            font-bold
+            tracking-tight
+            text-blue-300
+            sm:text-blue-400
+            drop-shadow-[0_1px_2px_rgba(0,0,0,0.3)]
+            ">{title}</h2>
           <div className="flex gap-2">
             <Button 
               variant="outline" 
@@ -71,11 +80,19 @@ const NoteList = ({ notes = [], onUpdate, isCreative = false, title = "Your Note
             </Button>
             <Dialog open={isCreating} onOpenChange={setIsCreating}>
               <DialogTrigger asChild>
-                <Button className={`flex items-center gap-1 ${
-                  isCreative
-                    ? "bg-gradient-to-r from-purple-600 to-pink-500 hover:from-purple-700 hover:to-pink-600"
-                    : "bg-gradient-to-r from-indigo-600 to-blue-500 hover:from-indigo-700 hover:to-blue-600"
-                } transition-all duration-300`}>
+                <Button
+                  className={`
+                    flex items-center gap-2 px-4 py-2
+                    text-sm font-semibold
+                    rounded-xl shadow-sm
+                    transition-all duration-300
+                    ${isCreative
+                      ? "bg-gradient-to-r from-purple-600 to-pink-500 hover:from-purple-500 hover:to-pink-400 focus:ring-2 focus:ring-pink-400"
+                      : "bg-gradient-to-r from-indigo-600 to-blue-500 hover:from-indigo-500 hover:to-blue-400 focus:ring-2 focus:ring-blue-400"}
+                    hover:scale-[1.05] active:scale-[0.98]
+                    text-white
+                  `}
+                >
                   <PlusCircle className="h-4 w-4" />
                   {newButtonLabel}
                 </Button>

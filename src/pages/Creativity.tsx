@@ -218,19 +218,21 @@ export default function CreativityPage() {
   
   return (
     <div className="space-y-6 animate-fade-in">
-      <div className={`p-6 rounded-lg mb-8 ${bgGradient}`}>
-        <h1 className="text-3xl font-bold tracking-tight mb-2">
+      <div className={`p-2 rounded-lg mb-8 ${bgGradient}`}>
+        <h1 className="
+            text-lg
+            sm:text-xl
+            md:text-2xl
+            font-bold
+          ">
           Your Creative Space
         </h1>
-        <p className="text-muted-foreground">
-          Express yourself through writing, poetry, and storytelling
-        </p>
       </div>
       
       <div>
         <h2 className="text-2xl font-bold mb-6">Categories</h2>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 lg:gap-6 mb-10">
           {categories.map((category) => (
             <CategoryCard 
               key={category.name}
@@ -241,9 +243,21 @@ export default function CreativityPage() {
         </div>
         
         <div className="flex justify-between items-center mb-6">
-          <h2 className="text-2xl font-bold">
+          <h2
+            className="
+              text-lg
+              sm:text-xl
+              md:text-2xl
+              font-bold
+              tracking-tight
+              text-blue-300
+              sm:text-blue-400
+              drop-shadow-[0_1px_2px_rgba(0,0,0,0.3)]
+            "
+          >
             {selectedCategory ? `${selectedCategory} Writings` : "All Writings"}
           </h2>
+
           <div className="flex gap-2">
             <Button
               variant="outline"

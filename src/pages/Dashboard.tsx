@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { FileText, BookOpen, Brain, Clock } from "lucide-react";
 import NoteList from "@/components/NoteList";
 import { getAcademicNotes, Note } from "@/services/noteService";
@@ -79,23 +79,27 @@ const Dashboard = () => {
         </p>
       </div>
       
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 md:gap-4">
         {stats.map((stat, index) => (
-          <Card key={index}>
-            <CardHeader className="flex flex-row items-center justify-between pb-2 space-y-0">
-              <CardTitle className="text-sm font-medium">
+          <Card
+            key={index}
+            className="overflow-hidden"
+          >
+            <CardHeader className="flex flex-row items-center justify-between pb-2 space-y-0 p-3 md:p-6">
+              <CardTitle className="text-xs md:text-sm font-medium truncate pr-1">
                 {stat.title}
               </CardTitle>
-              <div className={`${stat.color} p-2 rounded-full`}>
-                <stat.icon className="w-4 h-4" />
+              <div className={`${stat.color} p-1.5 md:p-2 rounded-full flex-shrink-0`}>
+                <stat.icon className="w-3 h-3 md:w-4 md:h-4" />
               </div>
             </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">{stat.value}</div>
+            <CardContent className="p-3 pt-0 md:p-6 md:pt-0">
+              <div className="text-lg md:text-2xl font-bold truncate">{stat.value}</div>
             </CardContent>
           </Card>
         ))}
       </div>
+
       
       <NoteList 
         notes={notes} 
