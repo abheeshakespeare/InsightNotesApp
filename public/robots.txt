@@ -1,3 +1,6 @@
+# Robots.txt for Giffy Duck (AI Notes Platform)
+# Author: Abhishek Mishra
+
 User-agent: Googlebot
 Allow: /
 
@@ -10,5 +13,9 @@ Allow: /
 User-agent: facebookexternalhit
 Allow: /
 
+# Allow all other bots
 User-agent: *
 Allow: /
+
+# Sitemap location
+Sitemap: https://www.giffyduck.com/sitemap.xml
